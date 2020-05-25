@@ -1,14 +1,15 @@
+import store from '@/store'
 import { getCSSString } from './initTheme'
 import { removeToken } from './auth'
 // 监听浏览器关闭 和刷新
 export function pageIsClose() {
   let _beforeUnload_time = 0,
-    _gap_time = 0
+      _gap_time = 0
   //是否是火狐浏览器
-  const is_fireFox = navigator.userAgent.indexOf("Firefox") > -1
-  window.onunload = function () {
+  const is_fireFox = navigator.userAgent.indexOf("Firefox")>-1
+  window.onunload = function (){
     _gap_time = new Date().getTime() - _beforeUnload_time
-    if (_gap_time <= 5) {
+    if(_gap_time <= 5) {
       // alert('浏览器关闭')
       removeToken()
     } else {
@@ -17,7 +18,7 @@ export function pageIsClose() {
   }
   window.onbeforeunload = function () {
     _beforeUnload_time = new Date().getTime()
-    if (is_fireFox) { //火狐关闭执行
+    if(is_fireFox) { //火狐关闭执行
       removeToken()
     }
   }
@@ -44,7 +45,22 @@ export async function setTheme(theme) {
   }
   body.className = theme + '-theme'
 }
-
+// 设置模板角色
+export function setLive2d(live2d) {
+  setTimeout(() => {
+    window.L2Dwidget.config.model = {  jsonPath: `${window.location.origin}/live2dw/live2d-widget-model-${live2d}/assets/${live2d}.model.json`}
+    window.L2Dwidget.config.pluginModelPath = `live2d-widget-model-${live2d}/assets/`
+    window.L2Dwidget.init()
+  }, 100)
+}
+// 改变模板角色宽高
+export function changeLiveWH(opts) {
+  if (!opts) opts = { width: 0, height: 0 }
+  setTimeout(() => {
+    window.L2Dwidget.config.display = {...window.L2Dwidget.config.display, ...opts},
+    window.L2Dwidget.init()
+  }, 100)
+}
 // 离开当前页面提示
 function leaveTips(e) {
   const event = window.event || e
@@ -115,7 +131,7 @@ export function deepClone(source) {
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
-  const later = function () {
+  const later = function() {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
@@ -132,7 +148,7 @@ export function debounce(func, wait, immediate) {
     }
   }
 
-  return function (...args) {
+  return function(...args) {
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout

@@ -3,7 +3,7 @@
  */
 
 import Cookies from 'js-cookie'
-import { setTheme } from '@/utils'
+import { setTheme, setLive2d } from '@/utils'
 
 const app = {
   state: {

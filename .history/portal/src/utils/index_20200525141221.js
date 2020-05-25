@@ -1,3 +1,4 @@
+import store from '@/store'
 import { getCSSString } from './initTheme'
 import { removeToken } from './auth'
 // 监听浏览器关闭 和刷新
