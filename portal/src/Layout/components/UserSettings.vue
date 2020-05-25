@@ -7,49 +7,39 @@
           主题色
           <sup class="act-color">beta</sup>
         </h5>
-        <theme-picker/>
+        <theme-picker />
       </div>
       <el-collapse v-model="collapseNames" accordion>
         <el-collapse-item title="界面皮肤" name="theme">
           <div class="change-theme">
-            <theme/>
-          </div>
-        </el-collapse-item>
-      </el-collapse>
-      <el-collapse v-model="L2DNames" accordion>
-        <el-collapse-item title="模型角色" name="L2D">
-          <div class="change-theme">
-            <live2d />
+            <theme />
           </div>
         </el-collapse-item>
       </el-collapse>
     </div>
-    
+
     <div class="update-time">{{ userInfo.systemUpdateTime }}</div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Theme from './Theme'
-import ThemePicker from './ThemePicker'
-import Live2d from './Live2d'
+import { mapGetters } from "vuex";
+import Theme from "./Theme";
+import ThemePicker from "./ThemePicker";
 export default {
   components: {
     Theme,
-    ThemePicker,
-    Live2d
+    ThemePicker
   },
   data() {
     return {
-      collapseNames: 'roles',
-      L2DNames: 'false'
-    }
+      collapseNames: "roles"
+    };
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(["userInfo"])
   }
-}
+};
 </script>
 
 <style lang="less">
@@ -63,7 +53,7 @@ export default {
     font-size: 14px;
     margin-bottom: 10px;
   }
-  .update-time{
+  .update-time {
     bottom: 10px;
     color: #ababab;
     font-size: 12px;

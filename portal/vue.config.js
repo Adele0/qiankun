@@ -17,7 +17,7 @@ module.exports = {
           filename: info => {
             return `${info.path}.gz${info.query}`
           },
-          algorithm: 'gzip', 
+          algorithm: 'gzip',
           threshold: 10240,
           // 对 js， css, svg 文件都采取 gzip压缩
           test: new RegExp('\\.(' + ['js', 'css', 'svg'].join('|') + ')$'),
@@ -35,7 +35,8 @@ module.exports = {
         '@layouts': path.resolve(__dirname, './src/layouts'),
         '@mixins': path.resolve(__dirname, './src/mixins'),
         '@routes': path.resolve(__dirname, './src/routes'),
-        '@views': path.resolve(__dirname, './src/views')
+        '@views': path.resolve(__dirname, './src/views'),
+        'img': path.resolve('src/assets/images')
       }
     }
   },
@@ -71,20 +72,20 @@ module.exports = {
        * 而且预渲染时生成的prefetch标签是modern版本的，低版本浏览器是不需要的
        */
       .plugins
-        .delete('prefetch')
+      .delete('prefetch')
       .end()
     if (process.env.NODE_ENV === 'production') {
       config
         .optimization
-          .minimize(true) // js文件最小化处理
-          .splitChunks({ chunks: 'all' }) // 分割代码
+        .minimize(true) // js文件最小化处理
+        .splitChunks({ chunks: 'all' }) // 分割代码
         .end()
-        // .module
-        //   .rule('images')   // 图片压缩
-        //   .use('image-webpack-loader')
-        //   .loader('image-webpack-loader')
-        //   .options({ bypassOnDebug: true })
-        // .end()
+      // .module
+      //   .rule('images')   // 图片压缩
+      //   .use('image-webpack-loader')
+      //   .loader('image-webpack-loader')
+      //   .options({ bypassOnDebug: true })
+      // .end()
     }
   },
   // 开发环境配置

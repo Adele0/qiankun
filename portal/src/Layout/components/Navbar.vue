@@ -10,8 +10,6 @@
       <top-nav />
     </div>
     <div class="right-avatar">
-      <i class="el-icon-question question" title="问卷调查" @click="$refs.question.comp.show = true"/>
-      <Weather />
       <el-dropdown class="avatar-container" trigger="click" size="small" @command="handleCommand">
         <div class="avatar-wrapper">
           <p class="user-name">
@@ -19,78 +17,63 @@
             <el-tag size="mini" class="act-color">{{ userInfo.currentRoleName }}</el-tag>
           </p>
           <p class="campus-names">{{ userInfo.currentCampusNames }}</p>
-          <i class="el-icon-caret-bottom"/>
+          <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <el-dropdown-item command="userSettings">
-            <svg-icon icon-class="setting" style="margin-right: 5px;"/>个人设置
+            <svg-icon icon-class="setting" style="margin-right: 5px;" />个人设置
           </el-dropdown-item>
           <el-dropdown-item command="themeSettings">
-            <svg-icon icon-class="themeSetting" style="margin-right: 5px;"/>主题设置
-          </el-dropdown-item>
-          <el-dropdown-item command="wifi">
-            <svg-icon icon-class="wifi" style="margin-right: 5px;"/>网络测速
+            <svg-icon icon-class="themeSetting" style="margin-right: 5px;" />主题设置
           </el-dropdown-item>
           <el-dropdown-item divided command="logout">
-            <svg-icon icon-class="logout" style="margin-right: 5px;"/>退出登录
+            <svg-icon icon-class="logout" style="margin-right: 5px;" />退出登录
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <speed-test ref="speedtest"/>
-    <question-naire ref="question"/>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import TopNav from '@/components/TopNav'
-import Hamburger from '@/components/Hamburger'
-import Weather from './Weather'
-import SpeedTest from '@/components/SpeedTest'
-import QuestionNaire from '@/components/QuestionNaire'
+import { mapGetters } from "vuex";
+import TopNav from "@/components/TopNav";
+import Hamburger from "@/components/Hamburger";
 
 export default {
   components: {
     TopNav,
-    Hamburger,
-    Weather,
-    SpeedTest,
-    QuestionNaire,
+    Hamburger
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'userInfo'
-    ])
+    ...mapGetters(["sidebar", "userInfo"])
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('toggleSideBar')
+      this.$store.dispatch("toggleSideBar");
     },
     handleCommand(command) {
       switch (command) {
-        case 'userSettings':
-          alert('个人设置中心')
-          break
-        case 'themeSettings':
-          this.$store.dispatch('toggleDrawer')
-          break
-        case 'wifi':
-          this.$refs.speedtest.comp.show = true
-          break
-        case 'logout':
-          this.$store.dispatch('fedLogOut').then(() => {
-            const fullPath = this.$route.fullPath
-            const path = fullPath ? `/portal-login?redirect=${fullPath}` : '/portal-login'
-            this.$router.push({ path })
-            location.reload() // 为了重新实例化vue-router对象 避免bug
-          })
-          break
+        case "userSettings":
+          alert("个人设置中心");
+          break;
+        case "themeSettings":
+          this.$store.dispatch("toggleDrawer");
+          break;
+        case "logout":
+          this.$store.dispatch("fedLogOut").then(() => {
+            const fullPath = this.$route.fullPath;
+            const path = fullPath
+              ? `/portal-login?redirect=${fullPath}`
+              : "/portal-login";
+            this.$router.push({ path });
+            location.reload(); // 为了重新实例化vue-router对象 避免bug
+          });
+          break;
       }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -103,14 +86,14 @@ export default {
   padding: 0 20px 0 10px;
   position: relative;
   z-index: 2;
-  background: rgba(255, 255, 255, .65);
+  background: rgba(255, 255, 255, 0.65);
   box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
   margin-bottom: 8px;
   .hamburger-container {
     flex-shrink: 0;
     padding: 3px 10px 0;
   }
-  .left-native{
+  .left-native {
     display: flex;
     height: 64px;
     line-height: 64px;
@@ -123,7 +106,7 @@ export default {
     height: 46px;
     line-height: 46px;
     flex-shrink: 0;
-    .question{
+    .question {
       font-size: 26px;
       cursor: pointer;
     }
@@ -177,16 +160,16 @@ export default {
     }
   }
 }
-@media screen and (max-width: 500px){
+@media screen and (max-width: 500px) {
   .act-color {
-    display: none!important;
+    display: none !important;
   }
   .campus-names {
-    display: none!important;
+    display: none !important;
   }
   .user-name {
-    padding-top: 0!important;
-    line-height: 46px!important;
+    padding-top: 0 !important;
+    line-height: 46px !important;
   }
 }
 </style>
