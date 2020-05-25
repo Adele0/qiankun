@@ -6,7 +6,7 @@
           <svg-icon icon-class="theme" class="act-color" style="font-size: 24px; margin: 0 auto" />
         </div>
         <div>
-          <p>OTO项目</p>
+          <p class="center">OTO项目</p>
           <p>by qiankun</p>
         </div>
       </router-link>
@@ -98,5 +98,8 @@ export default {
       }
     }
   }
+}
+.center {
+  text-align: center;
 }
 </style>

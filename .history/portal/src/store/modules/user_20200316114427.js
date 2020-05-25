@@ -56,7 +56,7 @@ const user = {
             reject('账号密码错误')
           }
         }, 800)
-
+        
         // login(username, userInfo.password)
         //   .then(response => {
         //     const { authSignature } = response.data
@@ -81,12 +81,13 @@ const user = {
           loginName: 'cg',
           menu: [  // 子应用与菜单
             {
-              appName: 'oms',
+              appName: '第一个子应用',
               appPrefix: '/sub-app1',
+              icon: 'el-icon-bell',
               // noDisplay: true,  // 是否具有该权限
               // ...  一些其他的信息
               appMenus: [
-                {
+                { 
                   menuName: '一级菜单首页',
                   path: '/',
                   icon: 'zht-icon-success',
@@ -97,9 +98,9 @@ const user = {
                   path: '/about',
                   icon: 'el-icon-user',
                   children: [
-                    { menuName: '二级菜单', path: '/about/index', icon: 'el-icon-user' },
+                    { menuName: '二级菜单', path: '/about/index',icon: 'el-icon-user' },
                     {
-                      menuName: '二级菜单',
+                      menuName:'二级菜单',
                       path: '/about/index/sub',
                       icon: 'el-icon-user',
                       hidden: true,
@@ -135,7 +136,7 @@ const user = {
               ]
             },
             {
-              appName: 'tms',
+              appName: '第二个子应用',
               appPrefix: '/sub-app2',
               // noDisplay: true,
               appMenus: [
@@ -159,7 +160,7 @@ const user = {
               ]
             },
             {
-              appName: 'wms',
+              appName: '第三个子应用',
               appPrefix: '/sub-app3',
               // noDisplay: true,
               appMenus: [
@@ -174,7 +175,24 @@ const user = {
                   icon: 'el-icon-user'
                 }
               ]
-            }
+            },
+            {
+              appName: '测试重连机制',
+              appPrefix: '/sub-app4',
+              // noDisplay: true,
+              appMenus: [
+                {
+                  menuName: '1111',
+                  path: '/',
+                  icon: 'el-icon-user'
+                },
+                {
+                  menuName: '2222',
+                  path: '/about',
+                  icon: 'el-icon-user'
+                }
+              ]
+            },
           ],
           mobile: '18811117311',
           skinId: 'blackgold',

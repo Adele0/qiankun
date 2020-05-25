@@ -3,11 +3,11 @@
     <div class="logo">
       <router-link to="/">
         <div>
-          <svg-icon icon-class="theme" class="act-color" style="font-size: 24px; margin: 0 auto" />
+          <svg-icon icon-class="theme" class="act-color" style="font-size: 24px; margin: 0 auto"/>
         </div>
         <div>
-          <p>OTO项目</p>
-          <p>by qiankun</p>
+          <p>中后台</p>
+          <p>the singleSpa project</p>
         </div>
       </router-link>
     </div>
@@ -32,28 +32,31 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import SidebarItem from "./SidebarItem";
+import { mapGetters } from 'vuex'
+import SidebarItem from './SidebarItem'
 
 export default {
   components: { SidebarItem },
   computed: {
-    ...mapGetters(["permission_routers", "sidebar"]),
+    ...mapGetters([
+      'permission_routers',
+      'sidebar'
+    ]),
     isCollapse() {
-      return !this.sidebar.opened;
+      return !this.sidebar.opened
     },
     activeMenu() {
-      const { meta, path } = this.$route;
-      var newPath;
+      const { meta, path } = this.$route
+      var newPath
       // 判断是否开头和结尾都有 / 用于子应用类 点击跳转路由时  能匹配上 activeMenu
       if (/\/$/.test(path)) {
-        newPath = path.substring(0, path.length - 1);
+        newPath = path.substring(0, path.length-1)
       }
       // if set path, the sidebar will highlight the path you set
-      return meta.activeMenu || newPath || path;
+      return meta.activeMenu || newPath || path
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

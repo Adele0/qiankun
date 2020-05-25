@@ -7,7 +7,7 @@
         </div>
         <div>
           <p>OTO项目</p>
-          <p>by qiankun</p>
+          <p>the singleSpa project</p>
         </div>
       </router-link>
     </div>
