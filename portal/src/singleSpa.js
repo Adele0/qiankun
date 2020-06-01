@@ -13,11 +13,11 @@ import { appInfos, genActiveRule } from './appInfos'
 export default {
   name: 'master',
   watch: {
-    $route(to,from) {
+    $route(to, from) {
       if (to.path.split('/')[1] !== from.path.split('/')[1]) {  // 不是在同一个子应用中切换
         let key
         for (let a in this.retryTimer) {
-          if (from.path.indexOf(a)!==-1) {
+          if (from.path.indexOf(a) !== -1) {
             key = a
             break
           }
@@ -30,7 +30,7 @@ export default {
       }
       // 切换页面时  将 errorApp page取消
       if (this.errorApp) this.errorApp = false
-      if (from.path.indexOf('/portal-login')!==-1) {  // 如果是从登陆页来的
+      if (from.path.indexOf('/portal-login') !== -1) {  // 如果是从登陆页来的
         // 如果携带 重定向页面 则将重定向页面的子应用当做第一个子应用来加载 否则默认第一个子应用
         this.registerSubapp(from.query.redirect)
       }
@@ -40,7 +40,7 @@ export default {
       if (flag && this.isFirstMount) this.registerSubapp(to.path)
     }
   },
-  data () {
+  data() {
     // 传递给子应用的数据或者方法
     const parentThat = this
     const props = {
@@ -84,7 +84,7 @@ export default {
     ...mapGetters(['subApp'])
   },
   // 解决刷新 路由信息变化未触发的情况
-  created () {
+  created() {
     let flag = this.apps.some(item => this.$route.path.indexOf(item.href) !== -1)
     if (flag && this.isFirstMount) this.registerSubapp(this.$route.path)
   },
@@ -121,56 +121,56 @@ export default {
           },
           referrerPolicy: 'origin-when-cross-origin'
         })
-        .then(res => {
-          const key = that.$route.path.split('/')[1]
-          // 子应用未部署情况
-          if (res.status == 404) {
-            if (window.$portalLoading) {
-              window.$portalLoading.close()
-              window.$portalLoading = null
+          .then(res => {
+            const key = that.$route.path.split('/')[1]
+            // 子应用未部署情况
+            if (res.status == 404) {
+              if (window.$portalLoading) {
+                window.$portalLoading.close()
+                window.$portalLoading = null
+              }
+              that.hideLoading()
+              // 提示
+              that.$message.error('填写正确的项目地址或者请部署子应用')
+              // 将其url添加404url中 用于下次再点击提示
+              that.load404App[key] = url
+              resolve()  // 返回 状态给qiankun
             }
-            that.hideLoading()
-            // 提示
-            that.$message.error('填写正确的项目地址或者请部署子应用')
-            // 将其url添加404url中 用于下次再点击提示
-            that.load404App[key] = url
-            resolve()  // 返回 状态给qiankun
-          }
-          // 重连机制 如果成功 需清除 重连列表
-          that.tryRequestNum = 0
-          if (that.retryTimer[key]) {
-            window.clearTimeout(that.retryTimer[key].timer)
-            delete that.retryTimer[key]
-          }
-          resolve(res)  // 返回子应用资源给 主应用 否则会一直 pending中...
-        })  
-        .catch(err => {  // 捕获 子应用加载错误
-          // 重新加载
-          // 设定超时时间  5s  5s 内如果加载不出来 则进行再次加载
-          const key = that.$route.path.split('/')[1]
-          if (that.tryRequestNum <= 3) {  // 重连三次
-            let timer = setTimeout(() => {
-              that.tryRequestNum ++
-              if (window.$portalLoading) window.$portalLoading.setText(`正在重连子应用第${that.tryRequestNum}次`)
-              if (that.loading) that.loading.setText(`正在重连子应用第${that.tryRequestNum}次`)
-              that.request(url)
-            }, 3000)
-            that.retryTimer[key] = { timer, url }
-          } else {
-            if (window.$portalLoading) {
-              window.$portalLoading.close()
-              window.$portalLoading = null
-            }
-            that.hideLoading() 
-            that.errorApp = true
+            // 重连机制 如果成功 需清除 重连列表
             that.tryRequestNum = 0
-          }
-          // 返回加载失败 去除pending状态
-          reject(err)
-        })
+            if (that.retryTimer[key]) {
+              window.clearTimeout(that.retryTimer[key].timer)
+              delete that.retryTimer[key]
+            }
+            resolve(res)  // 返回子应用资源给 主应用 否则会一直 pending中...
+          })
+          .catch(err => {  // 捕获 子应用加载错误
+            // 重新加载
+            // 设定超时时间  5s  5s 内如果加载不出来 则进行再次加载
+            const key = that.$route.path.split('/')[1]
+            if (that.tryRequestNum <= 3) {  // 重连三次
+              let timer = setTimeout(() => {
+                that.tryRequestNum++
+                if (window.$portalLoading) window.$portalLoading.setText(`正在重连子应用第${that.tryRequestNum}次`)
+                if (that.loading) that.loading.setText(`正在重连子应用第${that.tryRequestNum}次`)
+                that.request(url)
+              }, 3000)
+              that.retryTimer[key] = { timer, url }
+            } else {
+              if (window.$portalLoading) {
+                window.$portalLoading.close()
+                window.$portalLoading = null
+              }
+              that.hideLoading()
+              that.errorApp = true
+              that.tryRequestNum = 0
+            }
+            // 返回加载失败 去除pending状态
+            reject(err)
+          })
       })
     },
-    render ({ appContent, loading }) {
+    render({ appContent, loading }) {
       this.appContent = appContent
     },
     showLoading() {
@@ -194,7 +194,7 @@ export default {
         this.loading = null
       }
     },
-    initQiankun (redirect) {
+    initQiankun(redirect) {
       const { apps } = this
       registerMicroApps(
         apps,
@@ -213,7 +213,7 @@ export default {
           ],
           afterUnmount: [
             app => {
-              
+
             }
           ],
           afterMount: [
@@ -246,7 +246,7 @@ export default {
       const defaultApp = apps[index] || {}
       console.log(defaultApp, 'defaultApp')
       setDefaultMountApp(defaultApp.href)
-      
+
       // 第一个子应用加载完毕
       runAfterFirstMounted(() => {
         this.hideLoading()
